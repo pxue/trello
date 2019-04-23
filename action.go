@@ -25,15 +25,17 @@ type Action struct {
 
 // ActionData represent the nested data of actions
 type ActionData struct {
-	Text           string          `json:"text,omitempty"`
-	List           *List           `json:"list,omitempty"`
-	Card           *ActionDataCard `json:"card,omitempty"`
-	CardSource     *ActionDataCard `json:"cardSource,omitempty"`
-	Board          *Board          `json:"board,omitempty"`
-	Old            *ActionDataCard `json:"old,omitempty"`
-	ListBefore     *List           `json:"listBefore,omitempty"`
-	ListAfter      *List           `json:"listAfter,omitempty"`
-	DateLastEdited time.Time       `json:"dateLastEdited"`
+	Text            string           `json:"text,omitempty"`
+	List            *List            `json:"list,omitempty"`
+	Card            *ActionDataCard  `json:"card,omitempty"`
+	CardSource      *ActionDataCard  `json:"cardSource,omitempty"`
+	Board           *Board           `json:"board,omitempty"`
+	Old             *ActionDataCard  `json:"old,omitempty"`
+	ListBefore      *List            `json:"listBefore,omitempty"`
+	ListAfter       *List            `json:"listAfter,omitempty"`
+	CustomFieldItem *CustomFieldItem `json:"customFieldItem,omitempty"`
+	CustomField     *CustomField     `json:"customField,omitempty"`
+	DateLastEdited  time.Time        `json:"dateLastEdited"`
 
 	CheckItem *CheckItem `json:"checkItem"`
 	Checklist *Checklist `json:"checklist"`

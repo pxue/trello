@@ -10,7 +10,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"time"
 
@@ -117,7 +119,7 @@ func (c *Client) Get(path string, args Arguments, target interface{}) error {
 // It runs a PUT request on the Trello API endpoint with the path and uses
 // the Arguments as URL parameters. Then it returns either the target interface
 // updated from the response or an error.
-func (c *Client) Put(path string, args Arguments, target interface{}) error {
+func (c *Client) Put(path string, args Arguments, target interface{}, payload ...interface{}) error {
 
 	// Trello prohibits more than 10 seconds/second per token
 	c.Throttle()
@@ -136,10 +138,22 @@ func (c *Client) Put(path string, args Arguments, target interface{}) error {
 	url := fmt.Sprintf("%s/%s", c.BaseURL, path)
 	urlWithParams := fmt.Sprintf("%s?%s", url, params.Encode())
 
-	req, err := http.NewRequest("PUT", urlWithParams, nil)
+	var buf io.ReadWriter
+	if len(payload) > 0 {
+		buf = new(bytes.Buffer)
+		err := json.NewEncoder(buf).Encode(payload[0])
+		if err != nil {
+			return err
+		}
+		x, _ := json.Marshal(payload[0])
+		log.Println(string(x))
+	}
+
+	req, err := http.NewRequest("PUT", urlWithParams, buf)
 	if err != nil {
 		return errors.Wrapf(err, "Invalid PUT request %s", url)
 	}
+	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := c.Client.Do(req)
 	if err != nil {

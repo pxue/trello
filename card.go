@@ -291,7 +291,18 @@ func (c *Card) AddURLAttachment(attachment *Attachment) error {
 		err = errors.Wrapf(err, "Error adding attachment to card %s", c.ID)
 	}
 	return err
+}
 
+// UpdateCustomFieldItem takes an CustomFieldOption and updates it to the card.
+func (c *Card) UpdateCustomFieldItem(customFieldID string, payload *CustomFieldItemOption) error {
+	path := fmt.Sprintf("cards/%s/customField/%s/item", c.ID, customFieldID)
+	args := Arguments{}
+	var target interface{}
+	err := c.client.Put(path, args, &target, payload)
+	if err != nil {
+		err = errors.Wrapf(err, "Error updating custom value on card %s", c.ID)
+	}
+	return err
 }
 
 // GetParentCard retrieves the originating Card if the Card was created

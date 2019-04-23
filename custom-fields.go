@@ -4,6 +4,8 @@ import "fmt"
 
 // CustomFieldItem represents the custom field items of Trello a trello card.
 type CustomFieldItem struct {
+	*CustomFieldItemOption
+
 	ID            string `json:"id"`
 	IDValue       string `json:"idValue"`
 	IDCustomField string `json:"idCustomField"`
@@ -37,6 +39,15 @@ type CustomFieldOption struct {
 	} `json:"value"`
 	Color string `json:"color,omitempty"`
 	Pos   int    `json:"pos"`
+}
+
+type CustomFieldItemOption struct {
+	Value CustomFieldItemOptionValue `json:"value"`
+}
+
+type CustomFieldItemOptionValue struct {
+	Checked string `json:"checked,omitempty"`
+	Text    string `json:"text,omitempty"`
 }
 
 // GetCustomField takes a field id string and Arguments and returns the matching custom Field.
