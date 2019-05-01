@@ -222,6 +222,11 @@ func (c *Client) CreateCard(card *Card, extraArgs Arguments) error {
 	return err
 }
 
+// SetClient sets the underlying client on a card
+func (c *Card) SetClient(client *Client) {
+	c.client = client
+}
+
 // AddCard takes a Card and Arguments and adds the card to the receiver list.
 func (l *List) AddCard(card *Card, extraArgs Arguments) error {
 	path := fmt.Sprintf("lists/%s/cards", l.ID)
