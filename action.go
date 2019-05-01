@@ -35,6 +35,7 @@ type ActionData struct {
 	ListAfter       *List            `json:"listAfter,omitempty"`
 	CustomFieldItem *CustomFieldItem `json:"customFieldItem,omitempty"`
 	CustomField     *CustomField     `json:"customField,omitempty"`
+	Member          *Member          `json:"member,omitempty"`
 	DateLastEdited  time.Time        `json:"dateLastEdited"`
 
 	CheckItem *CheckItem `json:"checkItem"`
